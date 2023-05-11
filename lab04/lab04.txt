@@ -1,0 +1,69 @@
+Laboratório 4 - Computação Concorrente
+Aluno: João Pedro Coelho de Souza
+DRE: 119152051
+
+Atividade 1) 
+    1. Abra o arquivo exemplo1.c e entenda o que ele faz. Qual sa ́ıda e esperada para  ́
+    o programa (valor final da variavel soma)?  ́
+    R: Ao executar o programa são disparados dois fluxos de execução, cada qual com um
+    loop de 10000 iterações de incremento na variável soma, assim resultando em uma soma
+    igual a 20000.
+
+    2. Compile e execute o programa varias vezes  ́ e observe os resultados impressos na
+    tela.
+
+    3. Os valores impressos foram sempre o valor esperado? Se nao, explique por  ̃
+    que isso aconteceu?
+    R: Não, pois pelo fato de que os dois fluxos tentam alterar a mesma variável, pode
+    ocorrer uma (ou mais) situação(ões) onde o incremento de cada fluxo ocorre 
+    simultâneamente ao outro, podendo gerar uma inconsistência no resultado ao final 
+    das operações.
+
+    4. Esse programa apresenta o problema de condic ̧ao de corrida  ̃ ?
+    R: Sim. Por conta da linha de incremento da variável compartilhada presente em 
+    todos os fluxos disparados, o valor ao final da execução pode variar dependendo 
+    da ordem em que as threads executarão.
+
+    5. E poss  ́  ́ıvel que a variavel  ́ soma termine com valor acima de 200000? Por que?
+    R: Não, pois a quantidade de iterações é bem definida. Pode ocorrer números abaixo 
+    de 20000, mas nunca acima.
+
+Atividade 2) 
+    1. Abra o arquivo exemplo1a.c e compreenda como locks sao usados para imple-  ̃
+    mentar a exclusao m  ̃ utua (  ́ acompanhe a explanac ̧ao da professora  ̃ ).
+
+    2. Execute o programa varias vezes  ́ . Os valores impressos foram sempre o valor
+    esperado? Por que?
+    R: Sim, pois agora o código está implementado de forma que existe uma sincronização 
+    por exclusão múltua entre as threads e a sessão critica do código está protegida de 
+    uma eventual condição de corrida.
+
+    3. Altere o numero de threads e avalie os resultados.  ́
+    R: Ao alterar o número de threads na execução do programa, o valor final da soma se 
+    mantém equivalente ao número de threads vezes 10000, por conta da condição do loop 
+    do for de cada thread disparada.
+
+Atividade 3)
+    1. Leia o programa para entender o que ele faz (acompanhe a explanac ̧ao da pro-  ̃
+    fessora). Qual e a sec ̧  ́ ao cr  ̃  ́ıtica do codigo?  ́ Qual sa ́ıda e esperada para o pro-  ́
+    grama (valor final de s)?
+    R: A sessão critica do codigo está localizada na chamada do metodo inc() da classe S
+    dentro do método Run() da classe T, pois nesse trecho há manipulação de um recurso 
+    compartilhado entre as threads sem o uso de qualquer mecanismo de sincronização.
+
+    2. Compile o programa, execute-o varias vezes  ́ e observe os resultados impressos na
+    tela. Os valores impressos foram sempre o valor esperado? Por que?
+    R: Nas rodadas executadas nesta máquina, nenhuma atingiu o valor esperado de 20000.
+    Isso ocorre justamente pela ausência de um mecânismo de sincronização para evitar essa 
+    condição de corrida.
+
+Atividade 4) 
+    1. Comente as linhas 17-23; e descomente as linhas 27-33.
+
+    2. Acompanhe a explanac ̧ao da professora sobre o uso de  ̃ synchronized em Java.
+
+    3. Compile o programa, execute-o varias vezes  ́ e observe os resultados impressos na
+    tela. Os valores impressos foram sempre o valor esperado? Por que?
+    R: Agora, com o uso das diretivas synchronized nos métodos onde há a manipulação do
+    recurso compartilhado, o valor final da soma sempre atinge o 20000 pois não existe 
+    mais o problema dos fluxos se intrelassando durante a execução.
